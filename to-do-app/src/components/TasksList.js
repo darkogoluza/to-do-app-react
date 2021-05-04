@@ -4,7 +4,6 @@ import { useGlobalContext } from "../context";
 
 const TaskList = () => {
   const { tasks } = useGlobalContext();
-  console.log(tasks);
   return (
     <>
       <h1>Display tasks amount</h1>

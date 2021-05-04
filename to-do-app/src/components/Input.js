@@ -1,20 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useGlobalContext } from "../context";
 
 const Input = () => {
   const [inputValue, setInputValue] = useState("");
-  const { addTask } = useGlobalContext();
+  const {
+    addTask,
+    isRename: { state: renameState, id: renameId },
+    renameTask,
+    getTaskName,
+  } = useGlobalContext();
 
-  const handleCreate = () => {
-    addTask(inputValue);
-    setInputValue("");
+  const handleClick = () => {
+    if (renameState) {
+      renameTask(renameId, inputValue);
+      setInputValue("");
+    } else {
+      addTask(inputValue);
+      setInputValue("");
+    }
   };
+
+  useEffect(() => {
+    if (renameState) setInputValue(getTaskName(renameId));
+  }, [renameState]);
 
   return (
     <>
       <div className="input">
         <label htmlFor="input" className="input__label">
-          Create new task
+          {renameState ? "Change name" : "Create new task"}
         </label>
         <div className="input__container">
           <input
@@ -25,8 +39,8 @@ const Input = () => {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
           />
-          <button className="input__container__button" onClick={handleCreate}>
-            Create
+          <button className="input__container__button" onClick={handleClick}>
+            {renameState ? "Rename" : "Create"}
           </button>
         </div>
       </div>

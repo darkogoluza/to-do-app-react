@@ -54,4 +54,8 @@ main {
   outline: none;
   border: none;
 }
+
+.task-done {
+  opacity: 0.5;
+}
 /*# sourceMappingURL=main.css.map */
