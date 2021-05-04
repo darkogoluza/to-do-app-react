@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 const AppContext = React.createContext();
@@ -51,6 +51,21 @@ const AppProvider = ({ children }) => {
   const getTaskName = (id) => {
     return tasks.find((task) => id === task.id).name;
   };
+
+  useEffect(() => {
+    let loadedTasks = JSON.parse(localStorage.getItem("tasks"));
+    if (loadedTasks) {
+      loadedTasks = loadedTasks.map((task) => {
+        return { ...task, date: new Date(task.date) };
+      });
+      console.log(loadedTasks);
+      setTasks(loadedTasks);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   return (
     <AppContext.Provider
