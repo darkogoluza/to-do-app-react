@@ -1,10 +1,11 @@
 import React from "react";
 
-const Task = () => {
+const Task = ({ name, date }) => {
   return (
     <>
       <li>
-        <h1>Task</h1>
+        <h1>{name}</h1>
+        <p>{date.toString()}</p>
       </li>
     </>
   );

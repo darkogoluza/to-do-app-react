@@ -4,4 +4,54 @@
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
+
+main {
+  max-width: 900px;
+  padding: 0 1rem;
+  margin: auto;
+}
+
+.input {
+  width: 100%;
+  margin-bottom: 5rem;
+  margin-top: 2rem;
+}
+
+.input__label {
+  font-size: 2em;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.input__container {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.input__container #input {
+  height: 40px;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  padding-left: 1rem;
+  font-size: 1em;
+  border: 2px solid rgba(0, 0, 0, 0.25);
+}
+
+.input__container #input:focus {
+  border: 2px solid black;
+}
+
+.input__container__button {
+  height: 40px;
+  padding: 0 1rem;
+  background-color: green;
+  color: white;
+  cursor: pointer;
+  font-size: 1.25em;
+  outline: none;
+  border: none;
+}
 /*# sourceMappingURL=main.css.map */
