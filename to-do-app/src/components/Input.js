@@ -22,7 +22,7 @@ const Input = () => {
 
   useEffect(() => {
     if (renameState) setInputValue(getTaskName(renameId));
-  }, [renameState]);
+  }, [renameState, renameId]);
 
   return (
     <>
@@ -39,10 +39,20 @@ const Input = () => {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
           />
-          <button className="input__container__button" onClick={handleClick}>
+          <button
+            className={`input__container__button ${
+              inputValue === "" && "button--deactivate"
+            }`}
+            onClick={handleClick}
+          >
             {renameState ? "Rename" : "Create"}
           </button>
         </div>
+        {inputValue === "" && (
+          <p className="input__warning">
+            Enter valid name (name can not be empty)
+          </p>
+        )}
       </div>
     </>
   );

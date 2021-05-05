@@ -1,3 +1,103 @@
 .task-done {
-  opacity: 0.5;
+  opacity: 0.8;
+  text-decoration: line-through;
+}
+
+.task-hide {
+  display: none !important;
+}
+
+.task {
+  width: 100%;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__info {
+    flex-grow: 1;
+
+    max-width: 500px;
+    word-break: break-all;
+
+    background-color: #a2c5d1;
+    padding: 1rem;
+    transition: all 0.2s ease-in-out;
+
+    border-radius: 5px;
+    &-highlight {
+      font-weight: bold;
+      color: rgba(245, 248, 250, 1);
+    }
+
+    h1 {
+      font-size: 2em;
+      color: rgba(245, 248, 250, 0.5);
+    }
+    p {
+      font-size: 0.75em;
+      color: rgba(245, 258, 250, 0.5);
+    }
+  }
+
+  &__button {
+    min-height: 100px;
+    width: 100px;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    color: rgb(245, 248, 250);
+    font-size: 0.75em;
+    margin-left: 0.5rem;
+
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      filter: saturate(1.2);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 2rem;
+  }
+}
+
+.task--mark-as-done {
+  background-color: #06d6a0;
+}
+.task--remove {
+  background-color: #ef476f;
+}
+.task--rename {
+  background-color: #ffd166;
+}
+@media only screen and (max-width: 960px) {
+  .task {
+    flex-direction: column;
+
+    &__info {
+      max-width: none;
+    }
+    &__buttons {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    &__button {
+      margin-top: 0.25rem;
+      height: 40px;
+    }
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .task {
+    &__info {
+      h1 {
+        font-size: 1.25em;
+      }
+    }
+  }
 }

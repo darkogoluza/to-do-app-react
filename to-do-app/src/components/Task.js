@@ -2,16 +2,21 @@ import React from "react";
 import { formatISO9075 } from "date-fns";
 import { useGlobalContext } from "../context";
 
-const Task = ({ id, name, isDone, date }) => {
+const Task = ({ id, name, isDone, date, hide }) => {
   const { removeTask, toggleTask, startRename } = useGlobalContext();
   return (
     <>
-      <li className="task">
+      <li className={`task ${hide && "task-hide"}`}>
         <div className={`task__info ${isDone && "task-done"}`}>
-          <h1>{name}</h1>
-          <p>Created on : {formatISO9075(date)}</p>
+          <h1>
+            Task: <span className="task__info-highlight"> {name}</span>
+          </h1>
+          <p>
+            Created on:{" "}
+            <span className="task__info-highlight">{formatISO9075(date)}</span>
+          </p>
         </div>
-        <div className="task_buttons">
+        <div className="task__buttons">
           <button
             className="task__button task--mark-as-done"
             onClick={() => {

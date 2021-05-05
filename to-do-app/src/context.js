@@ -6,6 +6,7 @@ const AppContext = React.createContext();
 const AppProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
   const [isRename, setIsRename] = useState({ state: false, id: undefined });
+  const [isSearchBarActive, setIsSearchBarActive] = useState(false);
 
   const addTask = (taskName) => {
     const newTask = {
@@ -13,6 +14,7 @@ const AppProvider = ({ children }) => {
       name: taskName,
       isDone: false,
       date: new Date(),
+      hide: false,
     };
     setTasks([...tasks, newTask]);
   };
@@ -46,25 +48,49 @@ const AppProvider = ({ children }) => {
 
   const startRename = (id) => {
     setIsRename({ state: true, id: id });
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   };
 
   const getTaskName = (id) => {
     return tasks.find((task) => id === task.id).name;
   };
 
+  const filterTasksBySearch = (name) => {
+    if (name === "") {
+      setTasks(
+        tasks.map((task) => {
+          const newTask = task;
+          newTask.hide = false;
+          return newTask;
+        })
+      );
+
+      return;
+    }
+
+    const regex = new RegExp(`^${name}`, "gi");
+    setTasks(
+      tasks.map((task) => {
+        const newTask = task;
+        newTask.hide = !newTask.name.match(regex);
+        return newTask;
+      })
+    );
+  };
+
   useEffect(() => {
     let loadedTasks = JSON.parse(localStorage.getItem("tasks"));
     if (loadedTasks) {
       loadedTasks = loadedTasks.map((task) => {
-        return { ...task, date: new Date(task.date) };
+        return { ...task, date: new Date(task.date), hide: false };
       });
-      console.log(loadedTasks);
       setTasks(loadedTasks);
     }
   }, []);
 
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
+    setIsSearchBarActive(tasks.length >= 2);
   }, [tasks]);
 
   return (
@@ -78,6 +104,8 @@ const AppProvider = ({ children }) => {
         startRename,
         renameTask,
         getTaskName,
+        isSearchBarActive,
+        filterTasksBySearch,
       }}
     >
       {children}
