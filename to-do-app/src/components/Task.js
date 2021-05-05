@@ -2,11 +2,11 @@ import React from "react";
 import { formatISO9075 } from "date-fns";
 import { useGlobalContext } from "../context";
 
-const Task = ({ id, name, isDone, date, hide }) => {
+const Task = ({ id, name, isDone, date, filterHide, searchHide }) => {
   const { removeTask, toggleTask, startRename } = useGlobalContext();
   return (
     <>
-      <li className={`task ${hide && "task-hide"}`}>
+      <div className={`task ${(filterHide || searchHide) && "task-hide"}`}>
         <div className={`task__info ${isDone && "task-done"}`}>
           <h1>
             Task: <span className="task__info-highlight"> {name}</span>
@@ -42,7 +42,7 @@ const Task = ({ id, name, isDone, date, hide }) => {
             Remove
           </button>
         </div>
-      </li>
+      </div>
     </>
   );
 };

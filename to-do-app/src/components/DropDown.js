@@ -1,6 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 
-const DropDown = ({ title = "", items = [], dropdownId = "" }) => {
+const DropDown = ({
+  title = "",
+  items = [],
+  dropdownId = "",
+  onSelect,
+  defaultType,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState([]);
   const dropdown = useRef(null);
@@ -10,7 +16,9 @@ const DropDown = ({ title = "", items = [], dropdownId = "" }) => {
   };
 
   const handleItemClick = (id) => {
-    setSelectedItem(items.find((item) => item.id === id));
+    const selectedItem = items.find((item) => item.id === id);
+    onSelect && onSelect(selectedItem.name);
+    setSelectedItem(selectedItem);
     setTimeout(() => {
       setIsOpen(false);
     }, 300);
@@ -38,7 +46,9 @@ const DropDown = ({ title = "", items = [], dropdownId = "" }) => {
   useEffect(() => {
     document.addEventListener("mousedown", handleGlobalClick);
 
-    setSelectedItem(items[0]);
+    defaultType
+      ? setSelectedItem(items.find((item) => item.name === defaultType))
+      : setSelectedItem(items[0]);
 
     return () => {
       document.removeEventListener("mousedown", handleGlobalClick);

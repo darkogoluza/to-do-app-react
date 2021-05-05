@@ -109,6 +109,12 @@ main {
   margin-bottom: 3rem;
 }
 
+@media only screen and (max-width: 500px) {
+  .dropdown-container {
+    display: block;
+  }
+}
+
 .dropdown__header {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -231,6 +237,10 @@ main {
   width: 100%;
 }
 
+.task-list__content li {
+  list-style: none;
+}
+
 .task-done {
   opacity: 0.8;
   text-decoration: line-through;
@@ -240,9 +250,12 @@ main {
   display: none !important;
 }
 
+.task-wrapper:not(:last-child) {
+  margin-bottom: 2rem;
+}
+
 .task {
   width: 100%;
-  list-style: none;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -303,10 +316,6 @@ main {
           box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
 }
 
-.task:not(:last-child) {
-  margin-bottom: 2rem;
-}
-
 .task--mark-as-done {
   background-color: #06d6a0;
 }
@@ -328,8 +337,10 @@ main {
   }
   .task__info {
     max-width: none;
+    width: 100%;
   }
   .task__buttons {
+    width: 100%;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -339,7 +350,7 @@ main {
   }
   .task__button {
     margin-top: 0.25rem;
-    height: 40px;
+    min-height: 40px;
   }
 }
 

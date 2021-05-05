@@ -7,6 +7,7 @@ const AppProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
   const [isRename, setIsRename] = useState({ state: false, id: undefined });
   const [isSearchBarActive, setIsSearchBarActive] = useState(false);
+  const [isDraggable, setIsDraggable] = useState(false);
 
   const addTask = (taskName) => {
     const newTask = {
@@ -14,7 +15,8 @@ const AppProvider = ({ children }) => {
       name: taskName,
       isDone: false,
       date: new Date(),
-      hide: false,
+      searchHide: false,
+      filterHide: false,
     };
     setTasks([...tasks, newTask]);
   };
@@ -60,11 +62,10 @@ const AppProvider = ({ children }) => {
       setTasks(
         tasks.map((task) => {
           const newTask = task;
-          newTask.hide = false;
+          newTask.searchHide = false;
           return newTask;
         })
       );
-
       return;
     }
 
@@ -72,19 +73,111 @@ const AppProvider = ({ children }) => {
     setTasks(
       tasks.map((task) => {
         const newTask = task;
-        newTask.hide = !newTask.name.match(regex);
+        newTask.searchHide = !newTask.name.match(regex);
         return newTask;
       })
     );
+  };
+
+  const filterTasks = (filterType) => {
+    if (tasks.length === 0) return;
+    switch (filterType) {
+      case "All":
+        setTasks(
+          tasks.map((task) => {
+            const newTask = task;
+            newTask.filterHide = false;
+            return newTask;
+          })
+        );
+        break;
+      case "Done":
+        setTasks(
+          tasks.map((task) => {
+            const newTask = task;
+            newTask.filterHide = !newTask.isDone;
+            return newTask;
+          })
+        );
+        break;
+      case "Not Done":
+        setTasks(
+          tasks.map((task) => {
+            const newTask = task;
+            newTask.filterHide = newTask.isDone;
+            return newTask;
+          })
+        );
+        break;
+    }
+  };
+
+  const sortTasks = (sortType) => {
+    localStorage.setItem("sortType", sortType);
+    if (tasks.length === 0) return;
+    setIsDraggable(false);
+    switch (sortType) {
+      case "Name":
+        setTasks(getSortedTasksByName([...tasks]));
+        break;
+      case "Name Descending":
+        setTasks(getSortedTasksByName([...tasks]).reverse());
+        break;
+      case "Newest":
+        setTasks(getSortedTasksByDate([...tasks]));
+        break;
+      case "Oldest":
+        setTasks(getSortedTasksByDate([...tasks]).reverse());
+        break;
+      case "Manual":
+        setIsDraggable(true);
+    }
+  };
+
+  const getSortedTasksByName = (items) => {
+    return items.sort((a, b) => {
+      const nameA = a.name.toUpperCase();
+      const nameB = b.name.toUpperCase();
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+
+      return 0;
+    });
+  };
+
+  const getSortedTasksByDate = (items) => {
+    return items.sort((a, b) => {
+      const dateA = a.date;
+      const dateB = b.date;
+
+      if (dateA < dateB) {
+        return -1;
+      }
+      if (dateA > dateB) {
+        return 1;
+      }
+
+      return 0;
+    });
   };
 
   useEffect(() => {
     let loadedTasks = JSON.parse(localStorage.getItem("tasks"));
     if (loadedTasks) {
       loadedTasks = loadedTasks.map((task) => {
-        return { ...task, date: new Date(task.date), hide: false };
+        return {
+          ...task,
+          date: new Date(task.date),
+          searchHide: false,
+          filterHide: false,
+        };
       });
       setTasks(loadedTasks);
+      setIsDraggable(localStorage.getItem("sortType") === "Manual");
     }
   }, []);
 
@@ -98,6 +191,7 @@ const AppProvider = ({ children }) => {
       value={{
         tasks,
         addTask,
+        setTasks,
         removeTask,
         toggleTask,
         isRename,
@@ -106,6 +200,9 @@ const AppProvider = ({ children }) => {
         getTaskName,
         isSearchBarActive,
         filterTasksBySearch,
+        filterTasks,
+        sortTasks,
+        isDraggable,
       }}
     >
       {children}
