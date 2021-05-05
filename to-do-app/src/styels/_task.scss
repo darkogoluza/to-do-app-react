@@ -6,9 +6,19 @@
 .task-hide {
   display: none !important;
 }
+
+.task-remove {
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  right: 5rem !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .task-wrapper {
-  &:not(:last-child) {
-    margin-bottom: 2rem;
+  margin-bottom: 2rem;
+  &:last-child {
+    margin-bottom: 4rem;
   }
 }
 
@@ -17,6 +27,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+  right: 0rem;
 
   &__info {
     flex-grow: 1;

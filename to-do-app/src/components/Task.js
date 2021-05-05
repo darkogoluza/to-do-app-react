@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { formatISO9075 } from "date-fns";
 import { useGlobalContext } from "../context";
 
 const Task = ({ id, name, isDone, date, filterHide, searchHide }) => {
+  const [isRemove, setIsRemove] = useState(false);
   const { removeTask, toggleTask, startRename } = useGlobalContext();
   return (
     <>
-      <div className={`task ${(filterHide || searchHide) && "task-hide"}`}>
+      <div
+        className={`task ${(filterHide || searchHide) && "task-hide"} ${
+          isRemove && "task-remove"
+        }`}
+      >
         <div className={`task__info ${isDone && "task-done"}`}>
           <h1>
             Task: <span className="task__info-highlight"> {name}</span>
@@ -36,7 +41,10 @@ const Task = ({ id, name, isDone, date, filterHide, searchHide }) => {
           <button
             className="task__button task--remove"
             onClick={() => {
-              removeTask(id);
+              setIsRemove(true);
+              setTimeout(() => {
+                removeTask(id);
+              }, 300);
             }}
           >
             Remove
