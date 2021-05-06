@@ -1,6 +1,10 @@
 # About
 Made it using React for practice purposes <br> <br>
-## Example ![To do app react](https://user-images.githubusercontent.com/9008571/117281964-810ce280-ae64-11eb-80f6-fcc3b76c857e.gif)
+## Example
+![To do app react](https://user-images.githubusercontent.com/9008571/117281964-810ce280-ae64-11eb-80f6-fcc3b76c857e.gif)
+
+## Video showcase 
+[![Video](https://img.youtube.com/vi/fKdPKEJ9avI/0.jpg)](https://youtu.be/fKdPKEJ9avI)
 
 ---
 # Features
