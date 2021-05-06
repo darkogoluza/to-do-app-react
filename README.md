@@ -6,6 +6,8 @@ Made it using React for practice purposes <br> <br>
 ## Video showcase 
 [![Video](https://img.youtube.com/vi/fKdPKEJ9avI/0.jpg)](https://youtu.be/fKdPKEJ9avI)
 
+## Making the app
+[![Video](https://img.youtube.com/vi/fJix8UjBpog/0.jpg)](https://www.youtube.com/watch?v=fJix8UjBpog)
 ---
 # Features
 * Adding tasks 
